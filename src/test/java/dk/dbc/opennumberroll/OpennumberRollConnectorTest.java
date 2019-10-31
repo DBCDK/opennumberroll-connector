@@ -58,16 +58,8 @@ public class OpennumberRollConnectorTest {
 
         String actual = connector.getId(params);
 
-        /*assertThat(actual.length, is(1));
-        assertThat(actual[0].getId(), is("1"));
-        assertThat(actual[0].getCategory(), is("dpf"));
-        assertThat(actual[0].getMimetype(), is("text/plain"));
-        assertThat(actual[0].getState(), is(ApplicantState.PENDING));
-        assertThat(actual[0].getBody(), nullValue());
-        assertThat(actual[0].getTimeOfCreation(), is(Date.from(Instant.ofEpochMilli(1571212956165L)))); // Yes this is a clonky way to do it but Date(long) is deprecated
-        assertThat(actual[0].getTimeOfLastModification(), is(Date.from(Instant.ofEpochMilli(1571212956165L))));
-        assertThat(actual[0].getAdditionalInfo(), nullValue());
-        assertThat(actual[0].getBodyLink(), is(wireMockHost + "/v1/api/applicants/1/body"));*/
+        assertThat(actual.length(), is(9));
+        assertThat(actual, is("166718546"));
     }
 
 }
