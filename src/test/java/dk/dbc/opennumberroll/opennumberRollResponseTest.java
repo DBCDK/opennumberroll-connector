@@ -21,11 +21,7 @@ class opennumberRollResponseTest {
     @Test
     void jsonMarshalling() throws JSONBException {
         final OpennumberRollResponse entity = new OpennumberRollResponse();
-        OpennumberRollResponse.NumberRollResponse numberRollResponse = new OpennumberRollResponse.NumberRollResponse();
-        OpennumberRollResponse.NumberRollResponse.RollNumber rollNumber = new OpennumberRollResponse.NumberRollResponse.RollNumber();
-        rollNumber.set$("12345678");
-        numberRollResponse.setRollNumber(rollNumber);
-        entity.setNumberRollResponse(numberRollResponse);
+        entity.setId("12345678");
 
         assertThat(jsonbContext.marshall(entity), is(expectedJson));
     }
