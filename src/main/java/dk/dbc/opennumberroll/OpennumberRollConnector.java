@@ -109,13 +109,19 @@ public class OpennumberRollConnector {
         }
     }
 
+    /**
+     * Get a new id (faust) number
+     * @param params Request parameters
+     * @return An OpennumberRollResponse object with the new id number
+     * @throws OpennumberRollConnectorException
+     */
     public OpennumberRollResponse getRollNumber(Params params) throws OpennumberRollConnectorException {
         final Stopwatch stopwatch = new Stopwatch();
         try {
             final OpennumberRollResponse response = sendRequest(PATH_GET_ROLLNUMBER, params, OpennumberRollResponse.class);
             return response;
         } finally {
-            logger.log("getApplicants() took {} milliseconds",
+            logger.log("getRollNumber() took {} milliseconds",
                     stopwatch.getElapsedTime(TimeUnit.MILLISECONDS));
         }
     }
