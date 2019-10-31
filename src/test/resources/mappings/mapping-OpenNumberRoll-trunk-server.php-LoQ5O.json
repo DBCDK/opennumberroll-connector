@@ -1,12 +1,12 @@
 {
   "id" : "15196455-a5a6-3e58-90d4-2d5c102ad96e",
   "request" : {
-    "url" : "/~mib/OpenNumberRoll/trunk/server.php?numberRollName=faust_test&action=numberRoll&outputType=json",
+    "url" : "/1.0/server.php?numberRollName=faust_test&action=numberRoll&outputType=json",
     "method" : "GET"
   },
   "response" : {
     "status" : 200,
-    "bodyFileName" : "body-_mib-OpenNumberRoll-trunk-server.php-LoQ5O.json",
+    "bodyFileName" : "body-OpenNumberRoll-trunk-server.php-LoQ5O.json",
     "headers" : {
       "Date" : "Thu, 31 Oct 2019 12:23:59 GMT",
       "Server" : "Apache/2.2.16 (Debian)",

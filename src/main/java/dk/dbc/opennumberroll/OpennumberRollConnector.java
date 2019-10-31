@@ -27,7 +27,7 @@ public class OpennumberRollConnector {
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpennumberRollConnector.class);
-    private static final String PATH_GET_ROLLNUMBER = "~mib/OpenNumberRoll/trunk/server.php";
+    private static final String PATH_GET_ROLLNUMBER = "1.0/server.php";
 
     private static final int STATUS_CODE_GONE = 410;
     private static final int STATUS_CODE_UNPROCESSABLE_ENTITY = 422;
@@ -79,7 +79,7 @@ public class OpennumberRollConnector {
      * Returns new instance with custom retry policy
      *
      * @param failSafeHttpClient web resources client with custom retry policy
-     * @param baseUrl            base URL for opennumberRoll service endpoint
+     * @param baseUrl            base URL for opennumberRoll service endpoint.
      * @param level              timings log level
      */
     public OpennumberRollConnector(FailSafeHttpClient failSafeHttpClient, String baseUrl, OpennumberRollConnector.TimingLogLevel level) {
