@@ -6,7 +6,7 @@
 package dk.dbc.opennumberroll;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OpennumberRollResponse {
@@ -22,19 +22,18 @@ public class OpennumberRollResponse {
         public static class RollNumber {
 
             // Strange fieldname, but that's what we get :)
-            @JsonProperty("$")
-            public String id;
+            private String $;
 
             public String get$() {
-                return id;
+                return $;
             }
 
             public void set$(String $) {
-                this.id = $;
+                this.$ = $;
             }
         }
 
-        public RollNumber rollNumber;
+        private RollNumber rollNumber;
 
         public RollNumber getRollNumber() {
             return rollNumber;
@@ -45,7 +44,7 @@ public class OpennumberRollResponse {
         }
     }
 
-    public NumberRollResponse numberRollResponse;
+    private NumberRollResponse numberRollResponse;
 
     public NumberRollResponse getNumberRollResponse() {
         return numberRollResponse;
