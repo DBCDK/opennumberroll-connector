@@ -5,18 +5,18 @@
 
 package dk.dbc.opennumberroll;
 
-import com.github.tomakehurst.wiremock.WireMockServer;
 import dk.dbc.httpclient.HttpClient;
+
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.jackson.JacksonFeature;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.client.Client;
-import java.time.Instant;
-import java.util.Date;
 
+import com.github.tomakehurst.wiremock.WireMockServer;
 import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.hamcrest.CoreMatchers.is;
@@ -51,12 +51,12 @@ public class OpennumberRollConnectorTest {
         wireMockServer.stop();
     }
 
-    //@Test
+    @Test
     void testGetRollNumber() throws OpennumberRollConnectorException {
         OpennumberRollConnector.Params params = new OpennumberRollConnector.Params();
         params.withRollName("faust_test");
 
-        NumberrollResponse  actual = connector.getRollNumber(params);
+        OpennumberRollResponse actual = connector.getRollNumber(params);
 
         /*assertThat(actual.length, is(1));
         assertThat(actual[0].getId(), is("1"));
