@@ -21,10 +21,10 @@ public class OpennumberRollConnectorTestWireMockRecorder {
         OpennumberRollConnectorTest.connector = new OpennumberRollConnector(
                 OpennumberRollConnectorTest.CLIENT, "http://localhost:8080");
         final OpennumberRollConnectorTest opennumberRollConnectorTest = new OpennumberRollConnectorTest();
-        recordGetRollNumberRequests(opennumberRollConnectorTest);
+        recordGetIdRequests(opennumberRollConnectorTest);
     }
 
-    private static void recordGetRollNumberRequests(OpennumberRollConnectorTest opennumberRollConnectorTest)
+    private static void recordGetIdRequests(OpennumberRollConnectorTest opennumberRollConnectorTest)
             throws OpennumberRollConnectorException {
         opennumberRollConnectorTest.testGetRollNumber();
     }

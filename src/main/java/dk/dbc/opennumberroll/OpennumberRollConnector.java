@@ -115,11 +115,11 @@ public class OpennumberRollConnector {
      * @return An OpennumberRollResponse object with the new id number
      * @throws OpennumberRollConnectorException
      */
-    public OpennumberRollResponse getRollNumber(Params params) throws OpennumberRollConnectorException {
+    public String getId(Params params) throws OpennumberRollConnectorException {
         final Stopwatch stopwatch = new Stopwatch();
         try {
             final OpennumberRollResponse response = sendRequest(PATH_GET_ROLLNUMBER, params, OpennumberRollResponse.class);
-            return response;
+            return response.getId();
         } finally {
             logger.log("getRollNumber() took {} milliseconds",
                     stopwatch.getElapsedTime(TimeUnit.MILLISECONDS));

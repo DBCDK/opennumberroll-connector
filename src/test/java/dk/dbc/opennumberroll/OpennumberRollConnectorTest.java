@@ -56,7 +56,7 @@ public class OpennumberRollConnectorTest {
         OpennumberRollConnector.Params params = new OpennumberRollConnector.Params();
         params.withRollName("faust_test");
 
-        OpennumberRollResponse actual = connector.getRollNumber(params);
+        String actual = connector.getId(params);
 
         /*assertThat(actual.length, is(1));
         assertThat(actual[0].getId(), is("1"));
