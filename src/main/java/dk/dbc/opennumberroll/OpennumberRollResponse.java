@@ -53,4 +53,15 @@ public class OpennumberRollResponse {
     public void setNumberRollResponse(NumberRollResponse numberRollResponse) {
         this.numberRollResponse = numberRollResponse;
     }
+
+    @JsonIgnore
+    public String getId() {
+        return numberRollResponse.rollNumber.$;
+    }
+
+    void setId(String id) {
+        setNumberRollResponse(new NumberRollResponse());
+        numberRollResponse.setRollNumber(new NumberRollResponse.RollNumber());
+        numberRollResponse.rollNumber.set$(id);
+    }
 }
