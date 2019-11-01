@@ -31,6 +31,13 @@ public class OpennumberRollResponse {
             public void set$(String $) {
                 this.$ = $;
             }
+
+            @Override
+            public String toString() {
+                return "RollNumber{" +
+                        "$='" + $ + '\'' +
+                        '}';
+            }
         }
 
         private RollNumber rollNumber;
@@ -41,6 +48,13 @@ public class OpennumberRollResponse {
 
         public void setRollNumber(RollNumber rollNumber) {
             this.rollNumber = rollNumber;
+        }
+
+        @Override
+        public String toString() {
+            return "NumberRollResponse{" +
+                    "rollNumber=" + rollNumber +
+                    '}';
         }
     }
 
@@ -63,5 +77,12 @@ public class OpennumberRollResponse {
         setNumberRollResponse(new NumberRollResponse());
         numberRollResponse.setRollNumber(new NumberRollResponse.RollNumber());
         numberRollResponse.rollNumber.set$(id);
+    }
+
+    @Override
+    public String toString() {
+        return "OpennumberRollResponse{" +
+                "numberRollResponse=" + numberRollResponse +
+                '}';
     }
 }
