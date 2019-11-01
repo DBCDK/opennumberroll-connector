@@ -121,7 +121,7 @@ public class OpennumberRollConnector {
             final OpennumberRollResponse response = sendRequest(PATH_GET_ROLLNUMBER, params, OpennumberRollResponse.class);
             return response.getId();
         } finally {
-            logger.log("getRollNumber() took {} milliseconds",
+            logger.log("getId() took {} milliseconds",
                     stopwatch.getElapsedTime(TimeUnit.MILLISECONDS));
         }
     }
