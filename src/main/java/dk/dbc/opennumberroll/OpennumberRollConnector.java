@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.Response;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -31,7 +31,7 @@ public class OpennumberRollConnector {
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpennumberRollConnector.class);
-    private static final String PATH_GET_ROLLNUMBER = "?action=numberRoll&numberRollName=faust_test&outputType=xml";
+    private static final String PATH_GET_ROLLNUMBER = "1.0/server.php";
 
     private static final int STATUS_CODE_GONE = 410;
     private static final int STATUS_CODE_UNPROCESSABLE_ENTITY = 422;
@@ -41,8 +41,8 @@ public class OpennumberRollConnector {
             .retryIf((Response response) -> response.getStatus() == 404
                     || response.getStatus() == 500
                     || response.getStatus() == 502)
-            .withDelay(10, TimeUnit.SECONDS)
-            .withMaxRetries(6);
+            .withDelay(1, TimeUnit.SECONDS)
+            .withMaxRetries(3);
 
     private final FailSafeHttpClient failSafeHttpClient;
     private final String baseUrl;
@@ -83,7 +83,7 @@ public class OpennumberRollConnector {
      * Returns new instance with custom retry policy
      *
      * @param failSafeHttpClient web resources client with custom retry policy
-     * @param baseUrl            base URL for opennumberRoll service endpoint
+     * @param baseUrl            base URL for opennumberRoll service endpoint.
      * @param level              timings log level
      */
     public OpennumberRollConnector(FailSafeHttpClient failSafeHttpClient, String baseUrl, OpennumberRollConnector.TimingLogLevel level) {
@@ -113,13 +113,19 @@ public class OpennumberRollConnector {
         }
     }
 
-    public NumberrollResponse getRollNumber(Params params) throws OpennumberRollConnectorException {
+    /**
+     * Get a new id (faust) number
+     * @param params Request parameters
+     * @return An OpennumberRollResponse object with the new id number
+     * @throws OpennumberRollConnectorException
+     */
+    public String getId(Params params) throws OpennumberRollConnectorException {
         final Stopwatch stopwatch = new Stopwatch();
         try {
-            final NumberrollResponse response = sendRequest(PATH_GET_ROLLNUMBER, params, NumberrollResponse.class);
-            return response;
+            final OpennumberRollResponse response = sendRequest(PATH_GET_ROLLNUMBER, params, OpennumberRollResponse.class);
+            return response.getId();
         } finally {
-            logger.log("getApplicants() took {} milliseconds",
+            logger.log("getId() took {} milliseconds",
                     stopwatch.getElapsedTime(TimeUnit.MILLISECONDS));
         }
     }
@@ -187,7 +193,9 @@ public class OpennumberRollConnector {
 
     public static class Params extends HashMap<String, Object> {
         public enum Key {
-            ROLLNAME("state");
+            ACTION("action"),
+            OUTPUTTYPE( "outputType"),
+            ROLLNAME("numberRollName");
 
             private final String keyName;
 
@@ -200,6 +208,13 @@ public class OpennumberRollConnector {
             }
         }
 
+        public Params() {
+
+            // Seed the map with fixed values
+            putOrRemoveOnNull(Key.ACTION, "numberRoll");
+            putOrRemoveOnNull(Key.OUTPUTTYPE, "json");
+        }
+
         public Params withRollName(String rollName) {
             putOrRemoveOnNull(Key.ROLLNAME, rollName);
             return this;
@@ -207,6 +222,14 @@ public class OpennumberRollConnector {
 
         public Optional<String> getRollName() {
             return Optional.ofNullable((String) this.get(Key.ROLLNAME));
+        }
+
+        public Optional<String> getAction() {
+            return Optional.ofNullable((String) this.get(Key.ACTION));
+        }
+
+        public Optional<String> getOutputType() {
+            return Optional.ofNullable((String) this.get(Key.OUTPUTTYPE));
         }
 
         private void putOrRemoveOnNull(Key param, Object value) {

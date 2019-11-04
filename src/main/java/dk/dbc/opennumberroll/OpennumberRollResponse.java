@@ -6,7 +6,7 @@
 package dk.dbc.opennumberroll;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OpennumberRollResponse {
@@ -22,19 +22,25 @@ public class OpennumberRollResponse {
         public static class RollNumber {
 
             // Strange fieldname, but that's what we get :)
-            @JsonProperty("$")
-            public String id;
+            private String $;
 
             public String get$() {
-                return id;
+                return $;
             }
 
             public void set$(String $) {
-                this.id = $;
+                this.$ = $;
+            }
+
+            @Override
+            public String toString() {
+                return "RollNumber{" +
+                        "$='" + $ + '\'' +
+                        '}';
             }
         }
 
-        public RollNumber rollNumber;
+        private RollNumber rollNumber;
 
         public RollNumber getRollNumber() {
             return rollNumber;
@@ -43,9 +49,16 @@ public class OpennumberRollResponse {
         public void setRollNumber(RollNumber rollNumber) {
             this.rollNumber = rollNumber;
         }
+
+        @Override
+        public String toString() {
+            return "NumberRollResponse{" +
+                    "rollNumber=" + rollNumber +
+                    '}';
+        }
     }
 
-    public NumberRollResponse numberRollResponse;
+    private NumberRollResponse numberRollResponse;
 
     public NumberRollResponse getNumberRollResponse() {
         return numberRollResponse;
@@ -53,5 +66,23 @@ public class OpennumberRollResponse {
 
     public void setNumberRollResponse(NumberRollResponse numberRollResponse) {
         this.numberRollResponse = numberRollResponse;
+    }
+
+    @JsonIgnore
+    public String getId() {
+        return numberRollResponse.rollNumber.$;
+    }
+
+    void setId(String id) {
+        setNumberRollResponse(new NumberRollResponse());
+        numberRollResponse.setRollNumber(new NumberRollResponse.RollNumber());
+        numberRollResponse.rollNumber.set$(id);
+    }
+
+    @Override
+    public String toString() {
+        return "OpennumberRollResponse{" +
+                "numberRollResponse=" + numberRollResponse +
+                '}';
     }
 }
