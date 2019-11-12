@@ -31,7 +31,7 @@ public class OpennumberRollConnector {
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpennumberRollConnector.class);
-    private static final String PATH_GET_ROLLNUMBER = "1.0/server.php";
+    private static final String ENDPOINT_GET_ROLLNUMBER = "server.php";
 
     private static final int STATUS_CODE_GONE = 410;
     private static final int STATUS_CODE_UNPROCESSABLE_ENTITY = 422;
@@ -122,7 +122,7 @@ public class OpennumberRollConnector {
     public String getId(Params params) throws OpennumberRollConnectorException {
         final Stopwatch stopwatch = new Stopwatch();
         try {
-            final OpennumberRollResponse response = sendRequest(PATH_GET_ROLLNUMBER, params, OpennumberRollResponse.class);
+            final OpennumberRollResponse response = sendRequest(ENDPOINT_GET_ROLLNUMBER, params, OpennumberRollResponse.class);
             return response.getId();
         } finally {
             logger.log("getId() took {} milliseconds",
