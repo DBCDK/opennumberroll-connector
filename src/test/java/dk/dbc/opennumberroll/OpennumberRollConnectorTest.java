@@ -53,8 +53,11 @@ public class OpennumberRollConnectorTest {
     @Test
     void testGetRollNumber() throws OpennumberRollConnectorException {
         OpennumberRollConnector.Params params = new OpennumberRollConnector.Params();
-        params.withRollName("faust_test");
+        params.withRollName("faust_8");
 
+        // Examples:
+        //   http://guesstimate/~mib/OpenNumberRoll/trunk/server.php?action=numberRoll&numberRollName=faust_8&outputType=json
+        //   http://opennumberroll.addi.dk/1.0/server.php?action=numberRoll&numberRollName=faust_8&outputType=json
         String actual = connector.getId(params);
 
         assertThat(actual.length(), is(9));

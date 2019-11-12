@@ -1,7 +1,7 @@
 {
   "id" : "15196455-a5a6-3e58-90d4-2d5c102ad96e",
   "request" : {
-    "url" : "/1.0/server.php?numberRollName=faust_test&action=numberRoll&outputType=json",
+    "url" : "/1.0/server.php?numberRollName=faust_8&action=numberRoll&outputType=json",
     "method" : "GET"
   },
   "response" : {
