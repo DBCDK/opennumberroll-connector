@@ -123,6 +123,11 @@ public class OpennumberRollConnector {
         final Stopwatch stopwatch = new Stopwatch();
         try {
             final OpennumberRollResponse response = sendRequest(ENDPOINT_GET_ROLLNUMBER, params, OpennumberRollResponse.class);
+
+            if( response.getNumberRollResponse().hasError() ) {
+                throw new OpennumberRollConnectorException(response.getNumberRollResponse().getError().get$());
+
+            }
             return response.getId();
         } finally {
             logger.log("getId() took {} milliseconds",

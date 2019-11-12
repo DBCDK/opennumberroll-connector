@@ -36,7 +36,7 @@ public class OpennumberRollConnectorTest {
         wireMockServer = new WireMockServer(options().dynamicPort()
                 .dynamicHttpsPort());
         wireMockServer.start();
-        wireMockHost = "http://localhost:" + wireMockServer.port();
+        wireMockHost = "http://localhost:" + wireMockServer.port() + "/1.0";
         configureFor("localhost", wireMockServer.port());
     }
 
