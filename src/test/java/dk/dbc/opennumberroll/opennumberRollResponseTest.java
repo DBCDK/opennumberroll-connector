@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class opennumberRollResponseTest {
     private final JSONBContext jsonbContext = new JSONBContext();
     final String expectedJson =
-            "{\"numberRollResponse\":{\"rollNumber\":{\"$\":\"12345678\"}}}";
+            "{\"numberRollResponse\":{\"rollNumber\":{\"$\":\"12345678\"},\"error\":null}}";
 
     @Test
     void jsonMarshalling() throws JSONBException {

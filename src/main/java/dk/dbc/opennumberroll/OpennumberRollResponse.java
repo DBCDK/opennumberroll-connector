@@ -15,9 +15,29 @@ public class OpennumberRollResponse {
         OpennumberRoll server responds, for outputType=json, with this object:
 
         {"numberRollResponse":{"rollNumber":{"$":"166718546"}},"@namespaces":null}
+        or in case of errors
+        {"numberRollResponse":{"error":{"$":"some error"}}
     */
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class NumberRollResponse {
+
+        public static class Error {
+
+            // Strange fieldname, but that's what we get :)
+            private String $;
+
+            public String get$() { return $; }
+
+            public void set$(String $) { this.$ = $; }
+
+            @Override
+            public String toString() {
+                return "Error{" +
+                        "$='" + $ + '\'' +
+                        '}';
+            }
+        }
 
         public static class RollNumber {
 
@@ -35,12 +55,13 @@ public class OpennumberRollResponse {
             @Override
             public String toString() {
                 return "RollNumber{" +
-                        "$='" + $ + '\'' +
+                        "$='" + $ + "\'," +
                         '}';
             }
         }
 
         private RollNumber rollNumber;
+        private Error error;
 
         public RollNumber getRollNumber() {
             return rollNumber;
@@ -50,10 +71,17 @@ public class OpennumberRollResponse {
             this.rollNumber = rollNumber;
         }
 
+        public Error getError() { return error; }
+
+        public void setError(Error error) { this.error = error; }
+
+        public boolean hasError() { return error != null && !error.get$().isEmpty(); }
+
         @Override
         public String toString() {
             return "NumberRollResponse{" +
-                    "rollNumber=" + rollNumber +
+                    "rollNumber=" + rollNumber + "," +
+                    "error=" + error +
                     '}';
         }
     }
