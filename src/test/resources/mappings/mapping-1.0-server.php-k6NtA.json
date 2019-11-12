@@ -1,0 +1,18 @@
+{
+  "id" : "831492de-b23d-318e-a652-8930a59d7bee",
+  "request" : {
+    "url" : "/1.0/server.php?numberRollName=faust_something&action=numberRoll&outputType=json",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "bodyFileName" : "body-1.0-server.php-k6NtA.json",
+    "headers" : {
+      "Date" : "Tue, 12 Nov 2019 11:27:31 GMT",
+      "Server" : "Apache",
+      "Connection" : "close",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "831492de-b23d-318e-a652-8930a59d7bee"
+}

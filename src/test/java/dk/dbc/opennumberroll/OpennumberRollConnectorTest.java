@@ -13,6 +13,7 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import javax.ws.rs.client.Client;
 
@@ -62,6 +63,17 @@ public class OpennumberRollConnectorTest {
 
         assertThat(actual.length(), is(9));
         assertThat(actual, is("166718546"));
+    }
+
+    @Test
+    void testGetRollNumberFromBadRoll() {
+        OpennumberRollConnector.Params params = new OpennumberRollConnector.Params();
+        params.withRollName("faust_something");
+
+        // Examples:
+        //   http://guesstimate/~mib/OpenNumberRoll/trunk/server.php?action=numberRoll&numberRollName=faust_something&outputType=json
+        //   http://opennumberroll.addi.dk/1.0/server.php?action=numberRoll&numberRollName=faust_something&outputType=json
+        assertThrows(OpennumberRollConnectorException.class, () -> connector.getId(params));
     }
 
 }
