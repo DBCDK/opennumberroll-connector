@@ -18,7 +18,6 @@ import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.Response;
 import java.time.Duration;
-import java.util.Collections;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
