@@ -1,22 +1,16 @@
-/*
- * Copyright Dansk Bibliotekscenter a/s. Licensed under GPLv3
- * See license text in LICENSE.txt or at https://opensource.dbc.dk/licenses/gpl-3.0/
- */
-
 package dk.dbc.opennumberroll;
 
 import dk.dbc.httpclient.FailSafeHttpClient;
 import dk.dbc.httpclient.HttpGet;
 import dk.dbc.httpclient.PathBuilder;
-import dk.dbc.invariant.InvariantUtil;
-import dk.dbc.util.Stopwatch;
 import net.jodah.failsafe.RetryPolicy;
+import dk.dbc.util.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.ProcessingException;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.ProcessingException;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.core.Response;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -87,10 +81,12 @@ public class OpennumberRollConnector {
      * @param level              timings log level
      */
     public OpennumberRollConnector(FailSafeHttpClient failSafeHttpClient, String baseUrl, OpennumberRollConnector.TimingLogLevel level) {
-        this.failSafeHttpClient = InvariantUtil.checkNotNullOrThrow(
-                failSafeHttpClient, "failSafeHttpClient");
-        this.baseUrl = InvariantUtil.checkNotNullNotEmptyOrThrow(
-                baseUrl, "baseUrl");
+        if (failSafeHttpClient == null || baseUrl == null) {
+            throw new NullPointerException(String.format("No parameters is allowed to be null in call to OpennumberRollConnector(%s, %s, %s)",
+                    failSafeHttpClient == null ? "null" : failSafeHttpClient.toString(), baseUrl == null ? "null" : baseUrl, level.toString()));
+        }
+        this.failSafeHttpClient = failSafeHttpClient;
+        this.baseUrl = baseUrl;
         switch (level) {
             case TRACE:
                 logger = LOGGER::trace;
@@ -98,15 +94,13 @@ public class OpennumberRollConnector {
             case DEBUG:
                 logger = LOGGER::debug;
                 break;
-            case INFO:
-                logger = LOGGER::info;
-                break;
             case WARN:
                 logger = LOGGER::warn;
                 break;
             case ERROR:
                 logger = LOGGER::error;
                 break;
+            case INFO:
             default:
                 logger = LOGGER::info;
                 break;
