@@ -81,9 +81,11 @@ public class OpennumberRollConnector {
      * @param level              timings log level
      */
     public OpennumberRollConnector(FailSafeHttpClient failSafeHttpClient, String baseUrl, OpennumberRollConnector.TimingLogLevel level) {
-        if (failSafeHttpClient == null || baseUrl == null) {
+        if (failSafeHttpClient == null || baseUrl == null || level == null) {
             throw new NullPointerException(String.format("No parameters is allowed to be null in call to OpennumberRollConnector(%s, %s, %s)",
-                    failSafeHttpClient == null ? "null" : failSafeHttpClient.toString(), baseUrl == null ? "null" : baseUrl, level.toString()));
+                    failSafeHttpClient == null ? "null" : failSafeHttpClient.toString(),
+                    baseUrl == null ? "null" : baseUrl,
+                    level == null ? "null" : level.toString()));
         }
         this.failSafeHttpClient = failSafeHttpClient;
         this.baseUrl = baseUrl;
