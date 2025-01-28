@@ -2,10 +2,12 @@ package dk.dbc.opennumberroll;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OpennumberRollResponse {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(OpennumberRollResponse.class);
     /*
         OpennumberRoll server responds, for outputType=json, with this object:
 
@@ -93,6 +95,7 @@ public class OpennumberRollResponse {
 
     @JsonIgnore
     public String getId() {
+        LOGGER.info("GetId called: {}", numberRollResponse.toString());
         return numberRollResponse.rollNumber.$;
     }
 
