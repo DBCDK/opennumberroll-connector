@@ -2,7 +2,6 @@ package dk.dbc.opennumberroll;
 
 import dk.dbc.httpclient.FailSafeHttpClient;
 import dk.dbc.httpclient.HttpGet;
-import dk.dbc.httpclient.PathBuilder;
 import net.jodah.failsafe.RetryPolicy;
 import dk.dbc.util.Stopwatch;
 import org.slf4j.Logger;
@@ -25,7 +24,6 @@ public class OpennumberRollConnector {
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpennumberRollConnector.class);
-    private static final String ENDPOINT_GET_ROLLNUMBER = "server.php";
 
     private static final int STATUS_CODE_GONE = 410;
     private static final int STATUS_CODE_UNPROCESSABLE_ENTITY = 422;
@@ -118,10 +116,10 @@ public class OpennumberRollConnector {
     public String getId(Params params) throws OpennumberRollConnectorException {
         final Stopwatch stopwatch = new Stopwatch();
         try {
-            final OpennumberRollResponse response = sendRequest(ENDPOINT_GET_ROLLNUMBER, params, OpennumberRollResponse.class);
-
+            final OpennumberRollResponse response = sendRequest(params, OpennumberRollResponse.class);
+            logger.log("The response is: " + response);
             if( response.getNumberRollResponse().hasError() ) {
-                throw new OpennumberRollConnectorException(response.getNumberRollResponse().getError().get$());
+                throw new OpennumberRollConnectorException(response.getNumberRollResponse().getError().getNumber());
 
             }
             return response.getId();
@@ -131,12 +129,11 @@ public class OpennumberRollConnector {
         }
     }
 
-    private <T> T sendRequest(String basePath, Params params, Class<T> type)
+    private <T> T sendRequest(Params params, Class<T> type)
             throws OpennumberRollConnectorException {
-        final PathBuilder path = new PathBuilder(basePath);
+       // final PathBuilder path = new PathBuilder(basePath);
         final HttpGet httpGet = new HttpGet(failSafeHttpClient)
-                .withBaseUrl(baseUrl)
-                .withPathElements(path.build());
+                .withBaseUrl(baseUrl);
         if (params != null) {
             for (Map.Entry<String, Object> param : params.entrySet()) {
                 httpGet.withQueryParameter(param.getKey(), param.getValue());
@@ -213,7 +210,7 @@ public class OpennumberRollConnector {
 
             // Seed the map with fixed values
             putOrRemoveOnNull(Key.ACTION, "numberRoll");
-            putOrRemoveOnNull(Key.OUTPUTTYPE, "json");
+            putOrRemoveOnNull(Key.OUTPUTTYPE, "jsonb");
         }
 
         public Params withRollName(String rollName) {
@@ -241,5 +238,4 @@ public class OpennumberRollConnector {
             }
         }
     }
-
 }

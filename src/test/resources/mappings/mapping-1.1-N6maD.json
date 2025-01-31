@@ -1,0 +1,19 @@
+{
+  "id" : "a9b1a140-38fc-3b2d-8d08-435213b2c680",
+  "request" : {
+    "url" : "/1.1?numberRollName=faust&action=numberRoll&outputType=jsonb",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "bodyFileName" : "body-1.1-N6maD.json",
+    "headers" : {
+      "Server" : "Payara Micro #badassfish",
+      "Cluster-Node" : "opennumberroll-service-869c6bb4f5-vc987",
+      "Keep-Alive" : "timeout=10s",
+      "Content-Type" : "application/json",
+      "X-Frame-Options" : "SAMEORIGIN"
+    }
+  },
+  "uuid" : "a9b1a140-38fc-3b2d-8d08-435213b2c680"
+}
