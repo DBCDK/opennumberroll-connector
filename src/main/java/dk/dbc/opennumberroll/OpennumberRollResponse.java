@@ -2,18 +2,16 @@ package dk.dbc.opennumberroll;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OpennumberRollResponse {
-    private static final Logger LOGGER = LoggerFactory.getLogger(OpennumberRollResponse.class);
-    /*
-        OpennumberRoll server responds, for outputType=json, with this object:
 
-        {"numberRollResponse":{"rollNumber":{"$":"166718546"}},"@namespaces":null}
+    /*
+        OpennumberRoll server responds, for outputType=jsonb, with this object:
+
+        {"numberRollResponse":{"rollNumber":"166718546"},"@namespaces":null}
         or in case of errors
-        {"numberRollResponse":{"error":{"$":"some error"}}
+        {"numberRollResponse":{"error":{"rollNumber":"some error"}}
     */
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -21,50 +19,28 @@ public class OpennumberRollResponse {
 
         public static class Error {
 
-            // Strange fieldname, but that's what we get :)
-            private String $;
+            private String number;
 
-            public String get$() { return $; }
+            public String getNumber() { return number; }
 
-            public void set$(String $) { this.$ = $; }
+            public void setNumber(String number) { this.number = number; }
 
             @Override
             public String toString() {
                 return "Error{" +
-                        "$='" + $ + '\'' +
+                        "rollNumber='" + number + '\'' +
                         '}';
             }
         }
 
-        public static class RollNumber {
-
-            // Strange fieldname, but that's what we get :)
-            private String $;
-
-            public String get$() {
-                return $;
-            }
-
-            public void set$(String $) {
-                this.$ = $;
-            }
-
-            @Override
-            public String toString() {
-                return "RollNumber{" +
-                        "$='" + $ + "\'," +
-                        '}';
-            }
-        }
-
-        private RollNumber rollNumber;
+        private String rollNumber;
         private Error error;
 
-        public RollNumber getRollNumber() {
+        public String getRollNumber() {
             return rollNumber;
         }
 
-        public void setRollNumber(RollNumber rollNumber) {
+        public void setRollNumber(String rollNumber) {
             this.rollNumber = rollNumber;
         }
 
@@ -72,7 +48,7 @@ public class OpennumberRollResponse {
 
         public void setError(Error error) { this.error = error; }
 
-        public boolean hasError() { return error != null && !error.get$().isEmpty(); }
+        public boolean hasError() { return error != null && !error.getNumber().isEmpty(); }
 
         @Override
         public String toString() {
@@ -95,14 +71,12 @@ public class OpennumberRollResponse {
 
     @JsonIgnore
     public String getId() {
-        LOGGER.info("GetId called: {}", numberRollResponse.toString());
-        return numberRollResponse.rollNumber.$;
+        return numberRollResponse.getRollNumber();
     }
 
     void setId(String id) {
         setNumberRollResponse(new NumberRollResponse());
-        numberRollResponse.setRollNumber(new NumberRollResponse.RollNumber());
-        numberRollResponse.rollNumber.set$(id);
+        numberRollResponse.setRollNumber(id);
     }
 
     @Override

@@ -31,7 +31,7 @@ public class OpennumberRollConnectorTest {
         wireMockServer = new WireMockServer(options().dynamicPort()
                 .dynamicHttpsPort());
         wireMockServer.start();
-        wireMockHost = "http://localhost:" + wireMockServer.port() + "/1.0";
+        wireMockHost = "http://localhost:" + wireMockServer.port() + "/1.1";
         configureFor("localhost", wireMockServer.port());
     }
 
@@ -48,12 +48,12 @@ public class OpennumberRollConnectorTest {
     @Test
     void testGetRollNumber() throws OpennumberRollConnectorException {
         OpennumberRollConnector.Params params = new OpennumberRollConnector.Params();
-        params.withRollName("faust_test");
+        params.withRollName("faust");
 
         String actual = connector.getId(params);
 
         assertThat(actual.length(), is(9));
-        assertThat(actual, is("166718546"));
+        assertThat(actual, is("140217492"));
     }
 
 }
