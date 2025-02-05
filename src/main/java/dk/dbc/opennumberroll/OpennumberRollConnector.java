@@ -218,6 +218,11 @@ public class OpennumberRollConnector {
             return this;
         }
 
+        public Params withOutputType(String outputType) {
+            putOrRemoveOnNull(Key.OUTPUTTYPE, outputType);
+            return this;
+        }
+
         public Optional<String> getRollName() {
             return Optional.ofNullable((String) this.get(Key.ROLLNAME));
         }
