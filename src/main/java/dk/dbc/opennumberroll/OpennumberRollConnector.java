@@ -213,14 +213,14 @@ public class OpennumberRollConnector {
             putOrRemoveOnNull(Key.OUTPUTTYPE, "jsonb");
         }
 
-        public Params withRollName(String rollName) {
+        public void withRollName(String rollName) {
             putOrRemoveOnNull(Key.ROLLNAME, rollName);
-            return this;
+            //return this;
         }
 
-        public Params withOutputType(String outputType) {
+        public void withOutputType(String outputType) {
             putOrRemoveOnNull(Key.OUTPUTTYPE, outputType);
-            return this;
+            //return this;
         }
 
         public Optional<String> getRollName() {
