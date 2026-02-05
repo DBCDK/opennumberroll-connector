@@ -1,5 +1,6 @@
 package dk.dbc.opennumberroll;
 
+import dk.dbc.commons.useragent.UserAgent;
 import dk.dbc.httpclient.HttpClient;
 
 import org.glassfish.jersey.client.ClientConfig;
@@ -37,7 +38,8 @@ public class OpennumberRollConnectorTest {
 
     @BeforeAll
     static void setConnector() {
-        connector = new OpennumberRollConnector(CLIENT, wireMockHost, OpennumberRollConnector.TimingLogLevel.INFO);
+        connector = new OpennumberRollConnector(CLIENT, wireMockHost, OpennumberRollConnector.TimingLogLevel.INFO,
+                new UserAgent("OpenNumberRollConnectorTest"));
     }
 
     @AfterAll

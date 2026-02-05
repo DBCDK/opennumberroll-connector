@@ -1,5 +1,6 @@
 package dk.dbc.opennumberroll;
 
+import dk.dbc.commons.useragent.UserAgent;
 import dk.dbc.httpclient.HttpClient;
 import dk.dbc.opennumberroll.OpennumberRollConnector.TimingLogLevel;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -45,19 +46,20 @@ import jakarta.ws.rs.client.Client;
 @ApplicationScoped
 public class OpennumberRollConnectorFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(OpennumberRollConnectorFactory.class);
+    private static final UserAgent userAgent = UserAgent.forInternalRequests();
 
     public static OpennumberRollConnector create(String opennumberRollServiceBaseUrl) {
         final Client client = HttpClient.newClient(new ClientConfig()
                 .register(new JacksonFeature()));
         LOGGER.info("Creating OpennumberRollConnector for: {}", opennumberRollServiceBaseUrl);
-        return new OpennumberRollConnector(client, opennumberRollServiceBaseUrl);
+        return new OpennumberRollConnector(client, opennumberRollServiceBaseUrl, userAgent);
     }
 
     public static OpennumberRollConnector create(String opennumberRollServiceBaseUrl, OpennumberRollConnector.TimingLogLevel level) {
         final Client client = HttpClient.newClient(new ClientConfig()
                 .register(new JacksonFeature()));
         LOGGER.info("Creating OpennumberRollConnector for: {}", opennumberRollServiceBaseUrl);
-        return new OpennumberRollConnector(client, opennumberRollServiceBaseUrl, level);
+        return new OpennumberRollConnector(client, opennumberRollServiceBaseUrl, level, userAgent);
     }
 
     @Inject

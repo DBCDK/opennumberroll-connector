@@ -1,5 +1,6 @@
 package dk.dbc.opennumberroll;
 
+import dk.dbc.commons.useragent.UserAgent;
 import dk.dbc.httpclient.FailSafeHttpClient;
 import dk.dbc.httpclient.HttpGet;
 import net.jodah.failsafe.RetryPolicy;
@@ -46,8 +47,8 @@ public class OpennumberRollConnector {
      * @param httpClient web resources client
      * @param baseUrl    base URL for opennumberRoll service endpoint
      */
-    public OpennumberRollConnector(Client httpClient, String baseUrl) {
-        this(FailSafeHttpClient.create(httpClient, RETRY_POLICY), baseUrl, OpennumberRollConnector.TimingLogLevel.INFO);
+    public OpennumberRollConnector(Client httpClient, String baseUrl, UserAgent userAgent) {
+        this(FailSafeHttpClient.create(httpClient, userAgent, RETRY_POLICY), baseUrl, OpennumberRollConnector.TimingLogLevel.INFO);
     }
 
     /**
@@ -57,8 +58,8 @@ public class OpennumberRollConnector {
      * @param baseUrl    base URL for opennumberRoll service endpoint
      * @param level      timings log level
      */
-    public OpennumberRollConnector(Client httpClient, String baseUrl, OpennumberRollConnector.TimingLogLevel level) {
-        this(FailSafeHttpClient.create(httpClient, RETRY_POLICY), baseUrl, level);
+    public OpennumberRollConnector(Client httpClient, String baseUrl, OpennumberRollConnector.TimingLogLevel level, UserAgent userAgent) {
+        this(FailSafeHttpClient.create(httpClient, userAgent, RETRY_POLICY), baseUrl, level);
     }
 
     /**
