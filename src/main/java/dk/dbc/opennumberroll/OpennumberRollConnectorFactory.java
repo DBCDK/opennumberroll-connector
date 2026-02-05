@@ -55,10 +55,18 @@ public class OpennumberRollConnectorFactory {
         return new OpennumberRollConnector(client, opennumberRollServiceBaseUrl, userAgent);
     }
 
+    public static OpennumberRollConnector create(String opennumberRollServiceBaseUrl, UserAgent userAgent) {
+        final Client client = HttpClient.newClient(new ClientConfig()
+                .register(new JacksonFeature()));
+        LOGGER.info("Creating OpennumberRollConnector for: {}. Application: {}", opennumberRollServiceBaseUrl, userAgent.getApplicationName());
+        return new OpennumberRollConnector(client, opennumberRollServiceBaseUrl, userAgent);
+    }
+
     public static OpennumberRollConnector create(String opennumberRollServiceBaseUrl, OpennumberRollConnector.TimingLogLevel level) {
         final Client client = HttpClient.newClient(new ClientConfig()
                 .register(new JacksonFeature()));
-        LOGGER.info("Creating OpennumberRollConnector for: {}", opennumberRollServiceBaseUrl);
+        LOGGER.info("Creating OpennumberRollConnector for: {}. Enduser application is '{}'",
+                opennumberRollServiceBaseUrl, userAgent.getApplicationName());
         return new OpennumberRollConnector(client, opennumberRollServiceBaseUrl, level, userAgent);
     }
 
