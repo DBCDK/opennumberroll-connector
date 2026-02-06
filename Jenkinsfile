@@ -19,29 +19,34 @@ pipeline {
 		}
 		stage("verify") {
 			steps {
-				sh "mvn verify pmd:pmd"
+				sh "mvn verify"
 				junit "target/surefire-reports/TEST-*.xml"
 			}
 		}
-		stage("warnings") {
-			agent {label workerNode}
-			steps {
-				warnings consoleParsers: [
-					[parserName: "Java Compiler (javac)"]
-				],
-					unstableTotalAll: "0",
-					failedTotalAll: "0"
-			}
-		}
-		stage("pmd") {
-			agent {label workerNode}
-			steps {
-				step([$class: 'hudson.plugins.pmd.PmdPublisher',
-					  pattern: 'target/pmd.xml',
-					  unstableTotalAll: "0",
-					  failedTotalAll: "0"])
-			}
-		}
+		stage("sonarqube") {
+            steps {
+                withSonarQubeEnv(installationName: 'sonarqube.dbc.dk') {
+                    script {
+                        def status = 0
+
+                        def sonarOptions = "-Dsonar.branch.name=${BRANCH_NAME}"
+                        if (env.BRANCH_NAME != 'master') {
+                            sonarOptions += " -Dsonar.newCode.referenceBranch=master"
+                        }
+
+                        // Do sonar via maven
+                        status += sh returnStatus: true, script: """
+                            mvn -B $sonarOptions sonar:sonar
+                        """
+
+                        if (status != 0) {
+                            error("build failed")
+                        }
+                    }
+                }
+            }
+        }
+
 		stage("deploy") {
 			when {
 				branch "master"

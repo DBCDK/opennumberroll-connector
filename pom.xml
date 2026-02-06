@@ -21,6 +21,11 @@
         </repository>
     </repositories>
 
+    <properties>
+        <sonar.projectKey>opennumberrollconnector</sonar.projectKey>
+        <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>jakarta.platform</groupId>
