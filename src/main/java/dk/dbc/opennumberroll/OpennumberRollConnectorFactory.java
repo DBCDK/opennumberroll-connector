@@ -1,5 +1,6 @@
 package dk.dbc.opennumberroll;
 
+import dk.dbc.commons.useragent.UserAgent;
 import dk.dbc.httpclient.HttpClient;
 import dk.dbc.opennumberroll.OpennumberRollConnector.TimingLogLevel;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -46,18 +47,19 @@ import jakarta.ws.rs.client.Client;
 public class OpennumberRollConnectorFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(OpennumberRollConnectorFactory.class);
 
-    public static OpennumberRollConnector create(String opennumberRollServiceBaseUrl) {
+    public static OpennumberRollConnector create(String opennumberRollServiceBaseUrl, UserAgent userAgent) {
         final Client client = HttpClient.newClient(new ClientConfig()
                 .register(new JacksonFeature()));
-        LOGGER.info("Creating OpennumberRollConnector for: {}", opennumberRollServiceBaseUrl);
-        return new OpennumberRollConnector(client, opennumberRollServiceBaseUrl);
+        LOGGER.info("Creating OpennumberRollConnector for: {}. Application: {}", opennumberRollServiceBaseUrl, userAgent.getApplicationName());
+        return new OpennumberRollConnector(client, opennumberRollServiceBaseUrl, userAgent);
     }
 
-    public static OpennumberRollConnector create(String opennumberRollServiceBaseUrl, OpennumberRollConnector.TimingLogLevel level) {
+    public static OpennumberRollConnector create(String opennumberRollServiceBaseUrl, OpennumberRollConnector.TimingLogLevel level, UserAgent userAgent) {
         final Client client = HttpClient.newClient(new ClientConfig()
                 .register(new JacksonFeature()));
-        LOGGER.info("Creating OpennumberRollConnector for: {}", opennumberRollServiceBaseUrl);
-        return new OpennumberRollConnector(client, opennumberRollServiceBaseUrl, level);
+        LOGGER.info("Creating OpennumberRollConnector for: {}. Enduser application is '{}'",
+                opennumberRollServiceBaseUrl, userAgent.getApplicationName());
+        return new OpennumberRollConnector(client, opennumberRollServiceBaseUrl, level, userAgent);
     }
 
     @Inject
@@ -72,7 +74,7 @@ public class OpennumberRollConnectorFactory {
 
     @PostConstruct
     public void initializeConnector() {
-        opennumberRollConnector = OpennumberRollConnectorFactory.create(opennumberRollServiceUrl, level);
+        opennumberRollConnector = OpennumberRollConnectorFactory.create(opennumberRollServiceUrl, level, UserAgent.forInternalRequests());
     }
 
     @Produces

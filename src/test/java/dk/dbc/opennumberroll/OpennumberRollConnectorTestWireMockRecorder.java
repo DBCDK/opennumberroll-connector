@@ -1,5 +1,8 @@
 package dk.dbc.opennumberroll;
 
+import dk.dbc.commons.useragent.UserAgent;
+import org.eclipse.jetty.server.Authentication;
+
 public class OpennumberRollConnectorTestWireMockRecorder {
         /*
         Steps to reproduce wiremock recording:
@@ -14,7 +17,8 @@ public class OpennumberRollConnectorTestWireMockRecorder {
 
     public static void main(String[] args) throws Exception {
         OpennumberRollConnectorTest.connector = new OpennumberRollConnector(
-                OpennumberRollConnectorTest.CLIENT, "http://localhost:8080");
+                OpennumberRollConnectorTest.CLIENT, "http://localhost:8080",
+                new UserAgent("OpenNumberRollConnectorTest"));
         final OpennumberRollConnectorTest opennumberRollConnectorTest = new OpennumberRollConnectorTest();
         recordGetIdRequests(opennumberRollConnectorTest);
     }
