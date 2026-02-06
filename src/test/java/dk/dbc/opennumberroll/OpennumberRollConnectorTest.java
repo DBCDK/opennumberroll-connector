@@ -38,7 +38,7 @@ public class OpennumberRollConnectorTest {
 
     @BeforeAll
     static void setConnector() {
-    connector = OpennumberRollConnectorFactory.create(wireMockHost, new UserAgent("OpenNumberRollConnectorTest"));
+        connector = OpennumberRollConnectorFactory.create(wireMockHost, new UserAgent("OpenNumberRollConnectorTest"));
     }
 
     @AfterAll
