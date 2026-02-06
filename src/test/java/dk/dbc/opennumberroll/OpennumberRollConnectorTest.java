@@ -38,8 +38,7 @@ public class OpennumberRollConnectorTest {
 
     @BeforeAll
     static void setConnector() {
-        connector = new OpennumberRollConnector(CLIENT, wireMockHost, OpennumberRollConnector.TimingLogLevel.INFO,
-                new UserAgent("OpenNumberRollConnectorTest"));
+    connector = OpennumberRollConnectorFactory.create(wireMockHost, new UserAgent("OpenNumberRollConnectorTest"));
     }
 
     @AfterAll

@@ -46,14 +46,6 @@ import jakarta.ws.rs.client.Client;
 @ApplicationScoped
 public class OpennumberRollConnectorFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(OpennumberRollConnectorFactory.class);
-    private static final UserAgent userAgent = UserAgent.forInternalRequests();
-
-    public static OpennumberRollConnector create(String opennumberRollServiceBaseUrl) {
-        final Client client = HttpClient.newClient(new ClientConfig()
-                .register(new JacksonFeature()));
-        LOGGER.info("Creating OpennumberRollConnector for: {}", opennumberRollServiceBaseUrl);
-        return new OpennumberRollConnector(client, opennumberRollServiceBaseUrl, userAgent);
-    }
 
     public static OpennumberRollConnector create(String opennumberRollServiceBaseUrl, UserAgent userAgent) {
         final Client client = HttpClient.newClient(new ClientConfig()
@@ -62,7 +54,7 @@ public class OpennumberRollConnectorFactory {
         return new OpennumberRollConnector(client, opennumberRollServiceBaseUrl, userAgent);
     }
 
-    public static OpennumberRollConnector create(String opennumberRollServiceBaseUrl, OpennumberRollConnector.TimingLogLevel level) {
+    public static OpennumberRollConnector create(String opennumberRollServiceBaseUrl, OpennumberRollConnector.TimingLogLevel level, UserAgent userAgent) {
         final Client client = HttpClient.newClient(new ClientConfig()
                 .register(new JacksonFeature()));
         LOGGER.info("Creating OpennumberRollConnector for: {}. Enduser application is '{}'",
@@ -82,7 +74,7 @@ public class OpennumberRollConnectorFactory {
 
     @PostConstruct
     public void initializeConnector() {
-        opennumberRollConnector = OpennumberRollConnectorFactory.create(opennumberRollServiceUrl, level);
+        opennumberRollConnector = OpennumberRollConnectorFactory.create(opennumberRollServiceUrl, level, UserAgent.forInternalRequests());
     }
 
     @Produces
