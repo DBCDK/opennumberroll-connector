@@ -46,8 +46,15 @@ pipeline {
                 }
             }
         }
-
-		stage("deploy") {
+        stage("quality gate") {
+            steps {
+                // wait for analysis results
+                timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+		stage("deploy to mavenrepo") {
 			when {
 				branch "master"
 			}
